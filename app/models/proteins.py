@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Optional
+from typing import List, Optional
 from pydantic import BaseModel, Field, ConfigDict
 
 class ProteinStructure(BaseModel):
@@ -65,3 +65,18 @@ class ProteinStructure(BaseModel):
 class RecordIDEntry(BaseModel):
     record_id: str = Field(..., json_schema_extra={"example": "AHV82114.1.1.6_10921"})
     protein_structure: ProteinStructure = None
+    
+class ProteinNameEntry(BaseModel):
+    proteinname: str = Field(..., json_schema_extra={"example": "Product: polymerase 1"})
+    count: int = Field(..., json_schema_extra={"example": 100})
+    protein_structures: Optional[List[ProteinStructure]] = None
+
+class GenbankEntry(BaseModel):
+    genbank_id: str = Field(..., json_schema_extra={"example": "CAX33877.1"})
+    count: int = Field(..., json_schema_extra={"example": 100})
+    protein_structures: Optional[List[ProteinStructure]] = None
+
+class VirusEntry(BaseModel):
+    virus_name: str = Field(..., json_schema_extra={"example": "influenza A virus"})
+    count: int = Field(..., json_schema_extra={"example": 100})
+    protein_structures: Optional[List[ProteinStructure]] = None
