@@ -1,6 +1,10 @@
 from __future__ import annotations
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from app.routes import (
+health_check,
+proteins
+)
 
 app = FastAPI(
     root_path="/api",
@@ -8,6 +12,9 @@ app = FastAPI(
     title='Viro3D',
     description='Viro3D is an API for retrieving metatadata and structural models of AI-enabled predicted protein structures.',
 )
+
+app.include_router(health_check.router)
+app.include_router(proteins.router)
 
 app.add_middleware(
     CORSMiddleware,
