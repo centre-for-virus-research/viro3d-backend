@@ -1,0 +1,113 @@
+[
+
+    {
+        "_id": "DQ630756.1",
+        "isolate_designation": "PX611",
+        "segment": "Non-segmented",
+        "genome_length_bp": 2727.0,
+        "coordinates": [
+            {
+                "id": "ABG22142.1_12249",
+                "nt_acc": "DQ630756.1",
+                "virus_name": "ovine adenovirus 3",
+                "gene_name": "Product: hexon",
+                "pept_cat": "protein",
+                "segment": "Non-segmented",
+                "start": 1.0,
+                "end": 2727.0,
+                "strand": "+",
+                "family": "ABG22142.1_12249",
+                "join": "none"
+            }
+        ]
+    },
+
+
+    {
+        "_id": "KY432892.1",
+        "isolate_designation": "RtDs-AreV-IM2014",
+        "segment": "L",
+        "genome_length_bp": 7251.0,
+        "coordinates": [
+            {
+                "id": "ATY47649.1_9233",
+                "nt_acc": "KY432892.1",
+                "virus_name": "Alxa virus",
+                "gene_name": "Gene: Z; Product: Z protein",
+                "pept_cat": "protein",
+                "segment": "L",
+                "start": 6875.0,
+                "end": 7147.0,
+                "strand": "-",
+                "family": "ATY47649.1_9233",
+                "join": "none"
+            },
+            {
+                "id": "ATY47648.1.1.1_9233",
+                "nt_acc": "KY432892.1",
+                "virus_name": "Alxa virus",
+                "gene_name": "Arenavirus cap snatching domain; cl29053",
+                "isolate_designation": "RtDs-AreV-IM2014",
+                "pept_cat": "region",
+                "segment": "L",
+                "start": 62.0,
+                "end": 574.0,
+                "strand": "+",
+                "family": "ATY47648.1.1.1_9233",
+                "genome_length_bp": 7251.0,
+                "join": "none"
+            },
+            {
+                "id": "ATY47648.1.1.2_9233",
+                "nt_acc": "KY432892.1",
+                "virus_name": "Alxa virus",
+                "gene_name": "Arenavirus RNA polymerase; pfam06317",
+                "isolate_designation": "RtDs-AreV-IM2014",
+                "pept_cat": "region",
+                "segment": "L",
+                "start": 590.0,
+                "end": 6694.0,
+                "strand": "+",
+                "family": "ATY47648.1.1.2_9233",
+                "genome_length_bp": 7251.0,
+                "join": "none"
+            }
+        ]
+    },
+    {
+    "_id": "KY432893.1",
+    "isolate_designation": "RtDs-AreV-IM2014",
+    "segment": "S",
+    "genome_length_bp": 3341.0,
+    "coordinates": [
+        {
+            "id": "ATY47651.1_9233",
+            "nt_acc": "KY432893.1",
+            "virus_name": "Alxa virus",
+            "gene_name": "Gene: GPC; Product: glycoprotein precursor",
+            "pept_cat": "protein",
+            "segment": "S",
+            "start": 1812.0,
+            "end": 3269.0,
+            "strand": "-",
+            "family": "ATY47651.1_9233",
+            "join": "none"
+        },
+        {
+            "id": "ATY47650.1_9233",
+            "nt_acc": "KY432893.1",
+            "virus_name": "Alxa virus",
+            "gene_name": "Gene: NP; Product: nucleocapsid protein",
+            "isolate_designation": "RtDs-AreV-IM2014",
+            "pept_cat": "protein",
+            "segment": "S",
+            "start": 1.0,
+            "end": 1732.0,
+            "strand": "+",
+            "family": "ATY47650.1_9233",
+            "genome_length_bp": 3341.0,
+            "join": "none"
+        }
+        ]
+    }
+] 
