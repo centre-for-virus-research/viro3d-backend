@@ -3,7 +3,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes import (
 health_check,
-proteins
+proteins,
+viruses
 )
 
 app = FastAPI(
@@ -15,6 +16,7 @@ app = FastAPI(
 
 app.include_router(health_check.router)
 app.include_router(proteins.router)
+app.include_router(viruses.router)
 
 app.add_middleware(
     CORSMiddleware,

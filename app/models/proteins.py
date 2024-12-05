@@ -80,3 +80,16 @@ class VirusEntry(BaseModel):
     virus_name: str = Field(..., json_schema_extra={"example": "influenza A virus"})
     count: int = Field(..., json_schema_extra={"example": 100})
     protein_structures: Optional[List[ProteinStructure]] = None
+
+class BlastMatch(BaseModel):
+    structure_id: str = Field(..., json_schema_extra={"example": "CAX33877.1.6_11504"})
+    score: float = Field(..., json_schema_extra={"example": 48.0})
+    evalue: float = Field(..., json_schema_extra={"example": 1.25458})
+    hit_length: int = Field(..., json_schema_extra={"example": 11})
+    positives: int = Field(..., json_schema_extra={"example": 11})
+    gaps: int = Field(..., json_schema_extra={"example": 3})
+    protein_structure: ProteinStructure = Field(...)
+
+class BlastEntry(BaseModel):
+    sequence: str = Field(..., json_schema_extra={"example": "MRMRLLA"})
+    matches: List[BlastMatch] = None

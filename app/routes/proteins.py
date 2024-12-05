@@ -3,6 +3,9 @@ from fastapi import APIRouter, Depends, HTTPException
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from app.db import get_protein_structures_collection
 from app.models.proteins import *
+from Bio.Blast.Applications import NcbiblastpCommandline
+from io import StringIO
+from Bio.Blast import NCBIXML
 
 router = APIRouter(
     prefix="/proteins",
@@ -90,7 +93,7 @@ async def get_protein_structures_by_genbank_id(qualifier: str, page_size: int = 
         protein_structures = results).model_dump(by_alias=False
 )
         
-@router.get('/virus_name_match/', response_model=dict)
+@router.get('/virus_name/', response_model=dict)
 async def get_protein_structures_by_virus_name(qualifier: str, page_size: int = None, page_num: int = None, db: AsyncIOMotorDatabase = Depends(get_protein_structures_collection)):
 
     """
@@ -117,3 +120,92 @@ async def get_protein_structures_by_virus_name(qualifier: str, page_size: int = 
         count = count,
         protein_structures = results).model_dump(by_alias=False
     )
+
+#This route is used when the user clicks a suggestion in the autocomplete menu when searching by virus name - it is hidden in the API spec
+@router.get('/virus_name/', include_in_schema=False, response_model=dict)
+async def get_protein_structures_by_exact_virus_name(qualifier: str, page_size: int = None, page_num: int = None, db: AsyncIOMotorDatabase = Depends(get_protein_structures_collection)):
+
+    """
+    List Protein Structures by querying with the exact Virus Name
+    """
+
+    skips = 0
+    if page_size and page_num:
+        skips = page_size * (page_num - 1)
+    
+    query = { "Virus name(s)":  qualifier }
+  
+    cursor = db.find(query).skip(skips).limit(page_size) if page_size else db.find(query)
+
+    results = await cursor.to_list(length=page_size)
+
+    if not results:
+        raise HTTPException(status_code=404, detail="No Structures Found")
+    
+    count = await db.count_documents(query)
+
+    return VirusEntry(
+        virus_name = qualifier,
+        count = count,
+        protein_structures = results).model_dump(by_alias=False
+    )
+
+@router.get('/sequencematch/', response_model=dict)
+async def get_protein_structures_by_sequence(qualifier: str, page_size: int = None, page_num: int = None, db: AsyncIOMotorDatabase = Depends(get_protein_structures_collection)):
+    """
+    List Protein Structures by blastp sequence match
+    """
+    
+    skips = 0
+    if page_size and page_num:
+        skips = page_size * (page_num - 1)
+
+    if not (qualifier.isalpha() and ' ' not in qualifier):
+        raise HTTPException(status_code=400, detail="Search term contains non-alphabetic characters and/or spaces. Please re-enter your sequence")
+
+    #viro3d_seq_db is the name of the blast database - it just automatically names it after the .fas file unless specifed
+    blastp_cline = NcbiblastpCommandline(db="../app/blast_db/viro3d_seq_db.fas", outfmt=5, num_threads=4) 
+    stdout, stderr = blastp_cline(stdin=qualifier.upper(), stdout=True, stderr=True)
+    
+    if stderr:
+        print(f"Error occurred: {stderr}")
+    
+    result_handle = StringIO(stdout)
+    blast_records = NCBIXML.parse(result_handle)
+
+    results = []
+        
+    for record in blast_records:
+        for alignment in record.alignments:
+            for hsp in alignment.hsps:
+                structure = await db.find_one({ "_id": alignment.hit_def })
+                match = BlastMatch(
+                    structure_id = alignment.hit_def,
+                    score = hsp.score,
+                    evalue = hsp.expect,
+                    hit_length = alignment.length,
+                    positives = hsp.positives,
+                    gaps = hsp.gaps,
+                    protein_structure = structure
+                )
+
+                results.append(match)
+
+    if len(results) == 0:
+        raise HTTPException(status_code=404, detail="No Matches Found")
+    
+    else:
+        
+        results = sorted(
+            results,
+            key=lambda match: match.evalue,
+            )
+        
+        paginated_results = results[skips:skips + page_size] if page_size else results
+        
+        result = BlastEntry(
+            sequence = qualifier.upper(),
+            matches = paginated_results).model_dump(by_alias=False
+        )
+
+        return result
