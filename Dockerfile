@@ -17,6 +17,6 @@ RUN pip install --no-cache-dir --upgrade -r /viro-3d-api/requirements.txt
 
 COPY ./app /viro-3d-api/app
 
-RUN makeblastdb -in ./app/blast_db/viro3d_seq_db.fas -dbtype prot
+RUN makeblastdb -in ./app/blast_db/viro3d_seq_db.fas -dbtype prot -out viro3d_blast_db
 
 CMD ["fastapi", "run", "app/main.py", "--port", "8000"]

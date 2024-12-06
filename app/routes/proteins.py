@@ -1,3 +1,4 @@
+from app.utils.env_variables import BLAST_DB_PATH
 from app.utils.helpers import calculate_match_score, validate_regex
 from fastapi import APIRouter, Depends, HTTPException
 from motor.motor_asyncio import AsyncIOMotorDatabase
@@ -163,13 +164,10 @@ async def get_protein_structures_by_sequence(qualifier: str, page_size: int = No
     if not (qualifier.isalpha() and ' ' not in qualifier):
         raise HTTPException(status_code=400, detail="Search term contains non-alphabetic characters and/or spaces. Please re-enter your sequence")
 
-    #viro3d_seq_db is the name of the blast database - it just automatically names it after the .fas file unless specifed
+    #viro3d_blast_db is the name of the blast database - it just automatically names it after the .fas file unless specifed
     
-    #Dev Path
-    # blastp_cline = NcbiblastpCommandline(db="../app/blast_db/viro3d_seq_db.fas", outfmt=5, num_threads=4) 
+    blastp_cline = NcbiblastpCommandline(db=BLAST_DB_PATH, outfmt=5, num_threads=4) 
     
-    #Docker Path
-    blastp_cline = NcbiblastpCommandline(db="app/blast_db/viro3d_seq_db.fas", outfmt=5, num_threads=4)
     stdout, stderr = blastp_cline(stdin=qualifier.upper(), stdout=True, stderr=True)
     
     if stderr:
