@@ -1,0 +1,10 @@
+.pdb
+.phr
+.pin
+.pot
+.psq
+.ptf
+.pto
+__pycache__
+.pytest_cache
+/venv
