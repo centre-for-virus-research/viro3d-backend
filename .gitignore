@@ -1,6 +1,6 @@
 .env
 .json
-*.yaml
+*.yml
 *.out
 venv/
 database/
@@ -8,3 +8,4 @@ static/
 blast_db
 __pycache__
 .pytest_cache
+*.js
