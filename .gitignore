@@ -1,6 +1,6 @@
 .env
 .json
-*.yml
+.yml
 *.out
 venv/
 database/
