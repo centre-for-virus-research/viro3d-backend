@@ -8,8 +8,8 @@ services:
     ports:
       - "27017:27017"  # Expose MongoDB on the host port 27017
     environment:
-        MONGO_INITDB_ROOT_USERNAME: mongoadmin
-        MONGO_INITDB_ROOT_PASSWORD: mongopass
+        MONGO_INITDB_ROOT_USERNAME: mongoadmin #replace with your own username
+        MONGO_INITDB_ROOT_PASSWORD: mongopass #replace with your own password
     volumes:
       - mongodb_data:/data/db  # Mount a volume for MongoDB data persistence
       - ./database:/data/import  # Mount the local directory with JSON data files into the container
