@@ -1,3 +1,4 @@
+from natsort import natsorted
 from app.utils.env_variables import BLAST_DB_PATH
 from app.utils.helpers import calculate_match_score, validate_regex
 from fastapi import APIRouter, Depends, HTTPException
@@ -35,7 +36,7 @@ async def get_protein_structures_by_record_id(qualifier: str, db: AsyncIOMotorDa
         return result
 
 @router.get('/proteinname/', response_model=dict)
-async def get_protein_structures_by_protein_name(qualifier: str, page_size: int = None, page_num: int = None, db: AsyncIOMotorDatabase = Depends(get_protein_structures_collection)):
+async def get_protein_structures_by_protein_name(qualifier: str, filter: str = None, page_size: int = None, page_num: int = None, db: AsyncIOMotorDatabase = Depends(get_protein_structures_collection)):
     """
     List Protein Structures by Protein Name
     """
@@ -46,10 +47,21 @@ async def get_protein_structures_by_protein_name(qualifier: str, page_size: int 
 
     qualifier = validate_regex(qualifier)
     
-    query = { "genbank_name_curated": { '$regex' : qualifier, '$options' : 'i' } }
+    query = { "genbank_name_curated": { '$regex' : qualifier, '$options' : 'i' } } if filter == None else { "$and": [ { "genbank_name_curated": { '$regex' : qualifier, '$options' : 'i' } }, { "$or": [ { "Virus name(s)": { "$regex": filter, "$options": "i" } }, { "Virus name abbreviation(s)": { "$regex": filter, "$options": "i" } }] } ] }
+
     cursor = db.find(query)
 
     results = await cursor.to_list(length=None)
+    
+    virus_cursor = db.aggregate([
+    {"$match": query},
+    {"$group": {"_id": "$Virus name(s)"}},
+    ])
+    
+    virus_name_results = await virus_cursor.to_list(length=None) 
+    
+    sorted_virus_name_results = natsorted(virus_name_results, key=lambda x: x['_id'])
+    
     
     sorted_results = sorted(
         results, 
@@ -64,6 +76,7 @@ async def get_protein_structures_by_protein_name(qualifier: str, page_size: int 
 
     return ProteinNameEntry(
         proteinname = qualifier,
+        viruses = sorted_virus_name_results,
         count = len(results),
         protein_structures = paginated_results).model_dump(by_alias=False
     )

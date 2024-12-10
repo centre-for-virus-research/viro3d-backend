@@ -7,13 +7,14 @@ load_dotenv()
 # Debugging: print sys.argv
 print("sys.argv:", sys.argv)
 
-# Check if 'dev' is in the arguments
-if 'dev' in sys.argv:
-    APP_ENV = 'development'
-    print("RUNNING IN DEV")
-else:
+# Check if 'run' is in the arguments
+if 'run' in sys.argv:
     APP_ENV = 'production'
     print("RUNNING IN PROD")
+
+else:
+    APP_ENV = 'development'
+    print("RUNNING IN DEV")
 
 if APP_ENV == 'production':
     CONNECTION_STRING = os.environ['MONGODB_URI']
