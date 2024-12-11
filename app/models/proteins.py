@@ -68,7 +68,6 @@ class RecordIDEntry(BaseModel):
     
 class ProteinNameEntry(BaseModel):
     proteinname: str = Field(..., json_schema_extra={"example": "Product: polymerase 1"})
-    viruses: Optional[List[dict]] = None
     count: int = Field(..., json_schema_extra={"example": 100})
     protein_structures: Optional[List[ProteinStructure]] = None
 

@@ -52,17 +52,7 @@ async def get_protein_structures_by_protein_name(qualifier: str, filter: str = N
     cursor = db.find(query)
 
     results = await cursor.to_list(length=None)
-    
-    virus_cursor = db.aggregate([
-    {"$match": query},
-    {"$group": {"_id": "$Virus name(s)"}},
-    ])
-    
-    virus_name_results = await virus_cursor.to_list(length=None) 
-    
-    sorted_virus_name_results = natsorted(virus_name_results, key=lambda x: x['_id'])
-    
-    
+  
     sorted_results = sorted(
         results, 
         key=lambda x: calculate_match_score(x['genbank_name_curated'], qualifier),
@@ -76,7 +66,6 @@ async def get_protein_structures_by_protein_name(qualifier: str, filter: str = N
 
     return ProteinNameEntry(
         proteinname = qualifier,
-        viruses = sorted_virus_name_results,
         count = len(results),
         protein_structures = paginated_results).model_dump(by_alias=False
     )
@@ -108,7 +97,7 @@ async def get_protein_structures_by_genbank_id(qualifier: str, page_size: int = 
 )
         
 @router.get('/virus_name/', response_model=dict)
-async def get_protein_structures_by_virus_name(qualifier: str, page_size: int = None, page_num: int = None, db: AsyncIOMotorDatabase = Depends(get_protein_structures_collection)):
+async def get_protein_structures_by_virus_name(qualifier: str, filter: str = None, page_size: int = None, page_num: int = None, db: AsyncIOMotorDatabase = Depends(get_protein_structures_collection)):
 
     """
     List Protein Structures by Virus Name
@@ -119,7 +108,9 @@ async def get_protein_structures_by_virus_name(qualifier: str, page_size: int = 
         skips = page_size * (page_num - 1)
     
     qualifier = validate_regex(qualifier)
-    query = { "$or": [ { "Virus name(s)": { "$regex": qualifier, "$options": "i" } }, { "Virus name abbreviation(s)": { "$regex": qualifier, "$options": "i" } }] }
+    
+    query = { "$or": [ { "Virus name(s)": { "$regex": qualifier, "$options": "i" } }, { "Virus name abbreviation(s)": { "$regex": qualifier, "$options": "i" } }] } if filter == None else { "$and": [ { "genbank_name_curated": { '$regex' : filter, '$options' : 'i' } }, { "$or": [ { "Virus name(s)": { "$regex": qualifier, "$options": "i" } }, { "Virus name abbreviation(s)": { "$regex": qualifier, "$options": "i" } }] } ] }
+    
     cursor = db.find(query).skip(skips).limit(page_size) if page_size else db.find(query)
 
     results = await cursor.to_list(length=page_size)
@@ -136,8 +127,8 @@ async def get_protein_structures_by_virus_name(qualifier: str, page_size: int = 
     )
 
 #This route is used when the user clicks a suggestion in the autocomplete menu when searching by virus name - it is hidden in the API spec
-@router.get('/virus_name/', include_in_schema=False, response_model=dict)
-async def get_protein_structures_by_exact_virus_name(qualifier: str, page_size: int = None, page_num: int = None, db: AsyncIOMotorDatabase = Depends(get_protein_structures_collection)):
+@router.get('/virus_name_exact/', include_in_schema=False, response_model=dict)
+async def get_protein_structures_by_exact_virus_name(qualifier: str, filter:str = None, page_size: int = None, page_num: int = None, db: AsyncIOMotorDatabase = Depends(get_protein_structures_collection)):
 
     """
     List Protein Structures by querying with the exact Virus Name
@@ -147,8 +138,8 @@ async def get_protein_structures_by_exact_virus_name(qualifier: str, page_size: 
     if page_size and page_num:
         skips = page_size * (page_num - 1)
     
-    query = { "Virus name(s)":  qualifier }
-  
+    query = { "Virus name(s)":  qualifier } if filter == None else { "$and": [ { "genbank_name_curated": { '$regex' : filter, '$options' : 'i' } }, { "Virus name(s)":  qualifier } ] } 
+    
     cursor = db.find(query).skip(skips).limit(page_size) if page_size else db.find(query)
 
     results = await cursor.to_list(length=page_size)
