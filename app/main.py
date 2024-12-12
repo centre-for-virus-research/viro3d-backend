@@ -19,7 +19,7 @@ app = FastAPI(
     root_path="/api",
     version='1.0',
     title='Viro3D',
-    description='Viro3D is an API for retrieving metatadata and structural models of AI-enabled predicted protein structures.',
+    description='Viro3D is an API for retrieving metatadata and structural models of AI-enabled predicted protein structures. If you experience any browser slow-down, please use the <page_size> and <page_num> fields when making requests to limit the number of responses.',
 )
 
 app.include_router(health_check.router)
