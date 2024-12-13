@@ -10,4 +10,9 @@ def mock_protein_data():
 def mock_genome_data():
     with open("./mock_data/test_genome_coordinates.json") as f:
         return json.load(f)
+
+@pytest.fixture
+def mock_clusters_data():
+    with open("./mock_data/test_clusters.json") as f:
+        return json.load(f)
     

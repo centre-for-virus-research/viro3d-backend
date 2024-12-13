@@ -167,8 +167,6 @@ async def get_protein_structures_by_sequence(qualifier: str, page_size: int = No
 
     if not (qualifier.isalpha() and ' ' not in qualifier):
         raise HTTPException(status_code=400, detail="Search term contains non-alphabetic characters and/or spaces. Please re-enter your sequence")
-
-    #viro3d_blast_db is the name of the blast database - it just automatically names it after the .fas file unless specifed
     
     blastp_cline = NcbiblastpCommandline(db=BLAST_DB_PATH, outfmt=5, num_threads=4) 
     

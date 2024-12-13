@@ -1,0 +1,78 @@
+[
+    {
+        "_id": "CF-AFU07682.1_4667_relaxed",
+        "cluster_members": [
+            {
+                "cluster_rep_id": "CF-AFU07682.1_4667_relaxed",
+                "member_record_id": "AFU07682.1_4667",
+                "protein_length": 154,
+                "tax_id": 1235427,
+                "species": "Dyorhopapillomavirus 1",
+                "plDDT_score": 83.2
+            },
+            {
+                "cluster_rep_id": "CF-AFU07682.1_4667_relaxed",
+                "member_record_id": "AKB94037.1_4635",
+                "protein_length": 164,
+                "tax_id": 2758381,
+                "species": "Deltapapillomavirus 4",
+                "plDDT_score": 85.1
+            },
+            {
+                "cluster_rep_id": "CF-AFU07682.1_4667_relaxed",
+                "member_record_id": "AQA28215.1_4785",
+                "protein_length": 173,
+                "tax_id": 1335476,
+                "species": "Psipapillomavirus 2",
+                "plDDT_score": 77.9
+            }
+        ]
+    },
+    {
+        "_id": "CF-AFU07688.1_4668_relaxed",
+        "cluster_members": [
+            {
+                "cluster_rep_id": "CF-AFU07688.1_4668_relaxed",
+                "member_record_id": "AFU07688.1_4668",
+                "protein_length": 127,
+                "tax_id": 1235430,
+                "species": "Dyorhopapillomavirus 1",
+                "plDDT_score": 44.1
+            }
+        ]
+    },
+    {
+        "_id": "CF-AFU07689.1_4668_relaxed",
+        "cluster_members": [
+            {
+                "cluster_rep_id": "CF-AFU07689.1_4668_relaxed",
+                "member_record_id": "AFU07689.1_4668",
+                "protein_length": 146,
+                "tax_id": 1235430,
+                "species": "Dyorhopapillomavirus 1",
+                "plDDT_score": 84.9
+            },
+            {
+                "cluster_rep_id": "CF-AFU07689.1_4668_relaxed",
+                "member_record_id": "ADV03081.1_4646",
+                "protein_length": 150,
+                "tax_id": 940834,
+                "species": "Dyoiotapapillomavirus 1",
+                "plDDT_score": 87.6
+            }
+        ]
+    },
+    {
+        "_id": "CF-AFU25604.1_4425_relaxed",
+        "cluster_members": [
+            {
+                "cluster_rep_id": "CF-AFU25604.1_4425_relaxed",
+                "member_record_id": "AFU25604.1_4425",
+                "protein_length": 70,
+                "tax_id": 1236395,
+                "species": "Betapolyomavirus cercopitheci",
+                "plDDT_score": 60.6
+            }
+        ]
+    }
+]

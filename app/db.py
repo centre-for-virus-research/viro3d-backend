@@ -14,3 +14,10 @@ def get_genome_coordinates_collection():
         yield client.viro3d.get_collection("genome_coordinates")
     finally:
         client.close()
+
+def get_clusters_collection():
+    client = AsyncIOMotorClient(CONNECTION_STRING)
+    try:
+        yield client.viro3d.get_collection("clusters")
+    finally:
+        client.close()

@@ -8,7 +8,8 @@ genome_coordinates,
 health_check,
 proteins,
 viruses,
-zip
+zip,
+clusters
 )
 from app.utils.env_variables import *
 from app.routes.limiter import limiter
@@ -26,6 +27,7 @@ app.include_router(health_check.router)
 app.include_router(proteins.router)
 app.include_router(viruses.router)
 app.include_router(genome_coordinates.router)
+app.include_router(clusters.router)
 app.include_router(zip.router)
 app.mount("/pdb", StaticFiles(directory=Path(STRUCTURAL_MODELS_PATH)))
 app.mount("/graph_data", StaticFiles(directory=Path(GRAPH_DATA_PATH)))
