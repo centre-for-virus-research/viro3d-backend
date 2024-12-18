@@ -19,7 +19,7 @@ async def get_viruses(qualifier: str, page_size: int = None, page_num: int = Non
     skips = page_size * (page_num - 1) if page_size and page_num else 0
     
     qualifier = validate_regex(qualifier)
-    
+
     virus_query = { 
         "$or": [
             {"Virus name(s)": {"$regex": qualifier, "$options": "i"}},

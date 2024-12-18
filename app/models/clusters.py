@@ -18,4 +18,13 @@ class ClusterMember(BaseModel):
     protein_length: int = Field(..., example=1060)
     tax_id: int = Field(..., example=595652)
     species: str = Field(..., example="Ronavirus rotiferae")
-    plDDT_score: float = Field(..., example=55.2)
+    plDDT_score: float = Field(..., example=55.2),
+    virus_name: str = Field(..., example="Amsacta moorei entomopoxvirus")
+    family: str = Field(..., example="Poxviridae")
+    host: str = Field(..., example="Choristoneura rosaceana")
+    genbank_name_curated: str = Field(..., example="Gene: MSV134; Product: ORF MSV134 hypothetical protein")
+    uniprot_id: str = Field(..., example="Q9YVV8"),
+    genbank_id: str = Field(..., example="AFU34333.1"),
+    nucleotide_accession_number: str = Field(..., example="AF063866.1")
+    
+    
