@@ -48,6 +48,8 @@ async def test_get_structural_models_Zip_by_strucure_IDs_cif(mock_protein_data):
                 "genbank_id",
                 "taxid",
                 "nucleotide_accession_number",
+                "ESMFold pLDDT Score",
+                "ColabFold pLDDT Score"
             ]
             assert headers == expected_csv_headers, f'CSV headers mismatch: {headers}'
             
@@ -96,6 +98,8 @@ async def test_get_structural_models_Zip_by_strucure_IDs_pdb(mock_protein_data):
                 "genbank_id",
                 "taxid",
                 "nucleotide_accession_number",
+                "ESMFold pLDDT Score",
+                "ColabFold pLDDT Score"
             ]
             assert headers == expected_csv_headers, f'CSV headers mismatch: {headers}'
             
@@ -175,7 +179,7 @@ async def test_get_structural_models_Zip_by_cluster_ID_cif(mock_protein_data):
                 "uniprot_id",
                 "genbank_id",
                 "taxid",
-                "nucleotide_accession_number",
+                "nucleotide_accession_number"
             ]
             assert headers == expected_csv_headers, f'CSV headers mismatch: {headers}'
             
@@ -223,7 +227,7 @@ async def test_get_structural_models_Zip_by_cluster_ID_pdb(mock_protein_data):
                 "uniprot_id",
                 "genbank_id",
                 "taxid",
-                "nucleotide_accession_number",
+                "nucleotide_accession_number"
             ]
             assert headers == expected_csv_headers, f'CSV headers mismatch: {headers}'
             

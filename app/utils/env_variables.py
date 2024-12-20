@@ -20,9 +20,11 @@ if APP_ENV == 'production':
     CONNECTION_STRING = os.environ['MONGODB_URI']
     STRUCTURAL_MODELS_PATH = os.environ['STRUCTURAL_MODELS_PATH']
     GRAPH_DATA_PATH = os.environ['GRAPH_DATA_PATH']
+    PDFS_PATH = os.environ['PDFS_PATH']
     BLAST_DB_PATH = os.environ['BLAST_DB_PATH']
 else:
     CONNECTION_STRING = os.environ['DEV_MONGODB_URI']
     STRUCTURAL_MODELS_PATH = os.environ['DEV_STRUCTURAL_MODELS_PATH']
     GRAPH_DATA_PATH = os.environ['DEV_GRAPH_DATA_PATH']
+    PDFS_PATH = os.environ['DEV_PDFS_PATH']
     BLAST_DB_PATH = os.environ['DEV_BLAST_DB_PATH']

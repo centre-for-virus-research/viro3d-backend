@@ -46,6 +46,8 @@ async def get_structural_models_Zip_by_strucure_IDs(request: Request, qualifier:
             'genbank_id': row['protein_id'],
             'taxid': row['taxid'],
             'nucleotide_accession_number': row['nt_acc'],
+            'ESMFold pLDDT Score': row['esmfold_log_pLDDT'],
+            'ColabFold pLDDT Score': row['colabfold_json_pLDDT']
         })
         results.append(row['_id'])
 
@@ -88,7 +90,7 @@ async def get_structural_models_Zip_by_strucure_IDs(request: Request, qualifier:
         headers={"Content-Disposition": f"attachment; filename={qualifier}_{format}.zip"},
     )
 
-@router.get('/cluster/{qualifier}/{format}', include_in_schema=True)
+@router.get('/cluster/{qualifier}/{format}', include_in_schema=False)
 @limiter.limit("3/minute")
 async def get_structural_models_Zip_by_cluster_ID(request: Request, qualifier: str, format: str, db: AsyncIOMotorDatabase = Depends(get_clusters_collection)):
     
@@ -117,7 +119,7 @@ async def get_structural_models_Zip_by_cluster_ID(request: Request, qualifier: s
             'uniprot_id': row['uniprot_id'],
             'genbank_id': row['genbank_id'],
             'taxid': row['tax_id'],
-            'nucleotide_accession_number': row['nucleotide_accession_number'],
+            'nucleotide_accession_number': row['nucleotide_accession_number']
         })
         
         results.append(row['member_record_id'])

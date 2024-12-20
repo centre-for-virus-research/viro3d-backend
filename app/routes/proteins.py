@@ -27,7 +27,7 @@ async def get_protein_structures_by_record_id(qualifier: str, db: AsyncIOMotorDa
         raise HTTPException(status_code=404, detail="No Structures Found")
     
     else:
-
+        
         result = RecordIDEntry(
             record_id = qualifier,
             protein_structure = structure).model_dump(by_alias=False
@@ -35,7 +35,7 @@ async def get_protein_structures_by_record_id(qualifier: str, db: AsyncIOMotorDa
 
         return result
 
-@router.get('/proteinname/', response_model=dict)
+@router.get('/protein_name/', response_model=dict)
 async def get_protein_structures_by_protein_name(qualifier: str, filter: str = None, page_size: int = None, page_num: int = None, db: AsyncIOMotorDatabase = Depends(get_protein_structures_collection)):
     """
     List Protein Structures by Protein Name
@@ -70,7 +70,7 @@ async def get_protein_structures_by_protein_name(qualifier: str, filter: str = N
         protein_structures = paginated_results).model_dump(by_alias=False
     )
 
-@router.get('/genbankid/', response_model=dict)
+@router.get('/genbank_id/', response_model=dict)
 async def get_protein_structures_by_genbank_id(qualifier: str, page_size: int = None, page_num: int = None, db: AsyncIOMotorDatabase = Depends(get_protein_structures_collection)):
     """
     List Protein Structures by Genbank ID
@@ -155,7 +155,7 @@ async def get_protein_structures_by_exact_virus_name(qualifier: str, filter:str 
         protein_structures = results).model_dump(by_alias=False
     )
 
-@router.get('/sequencematch/', response_model=dict)
+@router.get('/sequence_match/', response_model=dict)
 async def get_protein_structures_by_sequence(qualifier: str, page_size: int = None, page_num: int = None, db: AsyncIOMotorDatabase = Depends(get_protein_structures_collection)):
     """
     List Protein Structures by blastp sequence match
