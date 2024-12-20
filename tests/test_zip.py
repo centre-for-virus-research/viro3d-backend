@@ -47,9 +47,7 @@ async def test_get_structural_models_Zip_by_strucure_IDs_cif(mock_protein_data):
                 "uniprot_id",
                 "genbank_id",
                 "taxid",
-                "nucleotide_accession_number",
-                "ESMFold pLDDT Score",
-                "ColabFold pLDDT Score"
+                "nucleotide_accession_number"
             ]
             assert headers == expected_csv_headers, f'CSV headers mismatch: {headers}'
             
@@ -97,9 +95,7 @@ async def test_get_structural_models_Zip_by_strucure_IDs_pdb(mock_protein_data):
                 "uniprot_id",
                 "genbank_id",
                 "taxid",
-                "nucleotide_accession_number",
-                "ESMFold pLDDT Score",
-                "ColabFold pLDDT Score"
+                "nucleotide_accession_number"
             ]
             assert headers == expected_csv_headers, f'CSV headers mismatch: {headers}'
             
@@ -140,9 +136,9 @@ async def test_get_structural_models_Zip_by_strucure_IDs_no_matches(mock_protein
     app.dependency_overrides.clear()
     
 @pytest.mark.asyncio
-async def test_get_structural_models_Zip_by_cluster_ID_cif(mock_protein_data):
+async def test_get_structural_models_Zip_by_cluster_ID_cif(mock_clusters_data):
     mock_collection = AsyncMongoMockClient()["test_database"]["protein_structures"]
-    await mock_collection.insert_many(mock_protein_data)
+    await mock_collection.insert_many(mock_clusters_data)
 
     app.dependency_overrides[get_protein_structures_collection] = lambda: mock_collection
     async_client = AsyncClient(transport=ASGITransport(app=app), base_url="http://test")
