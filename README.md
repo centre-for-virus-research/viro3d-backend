@@ -1,3 +1,13 @@
+# Viro3D API
+
+Viro3D is a comprehensive, searchable and browsable database of viral protein structure predictions, containing over 85,000 structural models from more than 4,400 human and animal viruses. This is the API for interfacing with the data.
+
+# Tech Stack
+```FastAPI```
+```MongoDB```
+```ncbi blast+```
+```pytest```
+
 # Running Manually
 
 ### Prerequisites
