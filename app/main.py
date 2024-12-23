@@ -31,7 +31,6 @@ app.include_router(clusters.router)
 app.include_router(zip.router)
 app.mount("/pdb", StaticFiles(directory=Path(STRUCTURAL_MODELS_PATH)))
 app.mount("/graph_data", StaticFiles(directory=Path(GRAPH_DATA_PATH)))
-app.mount("/pdfs", StaticFiles(directory=Path(PDFS_PATH)))
 
 app.add_middleware(
     CORSMiddleware,

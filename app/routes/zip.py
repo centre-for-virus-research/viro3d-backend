@@ -45,9 +45,7 @@ async def get_structural_models_Zip_by_strucure_IDs(request: Request, qualifier:
             'uniprot_id': row['uniprot_id'],
             'genbank_id': row['protein_id'],
             'taxid': row['taxid'],
-            'nucleotide_accession_number': row['nt_acc'],
-            'ESMFold pLDDT Score': row['esmfold_log_pLDDT'],
-            'ColabFold pLDDT Score': row['colabfold_json_pLDDT']
+            'nucleotide_accession_number': row['nt_acc']
         })
         results.append(row['_id'])
 
