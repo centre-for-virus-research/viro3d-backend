@@ -32,6 +32,12 @@ Enter to run the app in development mode:
 
 ```fastapi dev app/main.py```
 
+### Running Tests
+
+Enter to run the tests:
+
+```cd tests && pytest```
+
 # Running With Docker
 
 ### Prerequisites
@@ -55,4 +61,7 @@ Run the command:
 
 ```docker compose up```
 
+To stop the container, run:
+
+```docker compose down```
 
