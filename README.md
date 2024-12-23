@@ -1,0 +1,58 @@
+# Running Manually
+
+### Prerequisites
+
+You'll need python@3.6 or later, mongod@7.0.15 or later and ncbi blast+ 2.12.0.
+
+### Installing
+
+Create a python virtual environment in the project with the following command (optional)
+
+```python -m venv /path/to/new/virtual/environment```
+
+Run the following command to install all the project dependencies
+
+```pip install```
+
+Ensure you have a local mongodb install running with the following command (MacOS & Linux):
+
+```systemctl start mongod```
+
+Create the Viro3D database and its collections:
+
+```mongoimport --db viro3d --collection proteinstructures --file <PATH_TO>/protein_structures.json --jsonArray && mongoimport --db viro3d --collection genome_coordinates --file <PATH_TO>/genome_coordinates.json --jsonArray && mongoimport --db viro3d --collection clusters --file <PATH_TO>/clusters.json --jsonArray```
+
+Create the blastp database:
+
+```makeblastdb -in <PATH_TO_YOUR_FASTA_FILE>/viro3d_seq_db.fas -dbtype prot -out viro3d_blast_db```
+
+### Running Locally
+
+Enter to run the app in development mode:
+
+```fastapi dev app/main.py```
+
+# Running With Docker
+
+### Prerequisites
+
+You'll need Docker@27.3.1. (if you use an earlier version, ensure docker-compose is also installed seperately).
+
+Ensure that the structural models (pdbs and mmCIF) and graph data are one step outside the project directory, e.g:
+
+```.
+├── static
+│   ├── graph_data
+│   └── structural_models
+├── viro3d-backend
+│   ├── app
+│   ├── database
+│   ├── tests
+│   └── venv
+```
+
+Run the command:
+
+```docker compose up```
+
+
